@@ -1,0 +1,31 @@
+# ECF Coordinate Reference — CR-CM-001 §11
+#
+# The Enterprise Concept Framework's Domain × Stage coordinate system,
+# REFERENCED (never owned, never redefined) by the Concepts Model for
+# validating ECF Context entries.
+#
+# Authority: technehub-labs/dea-metaframework — framework/matrix.md
+# (The Canonical Foundation Matrix, M = D × S). If the ECF evolves, this
+# reference is updated by a CR; it is not edited ad hoc.
+
+ecf_coordinates:
+  source:
+    repository: technehub-labs/dea-metaframework
+    document: framework/matrix.md
+    retrieved: "2026-08-25"
+  domains:
+    - Governance & Existence
+    - Supply & Resources
+    - People & Organization
+    - Customer & Demand
+    - Product & Offering
+    - Operations & Delivery
+    - Finance & Value
+  stages:
+    - Conceive
+    - Design
+    - Build
+    - Activate
+    - Operate
+    - Improve
+    - Retire

@@ -1,0 +1,37 @@
+@startuml OpenDEA_Concepts_Model
+title OpenDEA Concepts Model — Semantic Architecture
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+skinparam shadowing false
+package "DEA MetaFramework" {
+    class "Enterprise Concept Framework" as ECF
+    class "ECF Domain" as Domain
+    class "ECF Stage" as Stage
+    ECF --> Domain : defines
+    ECF --> Stage : defines
+}
+package "OpenDEA Concepts Model" {
+    class Concept
+    class "Concept Area" as ConceptArea
+    class "Concept Profile" as ConceptProfile
+    class "ECF Context" as ECFContext
+    class "Concept Relationship" as ConceptRelationship
+    class "Concept Classification" as ConceptClassification
+    class Provenance
+    ECFContext --> Domain : uses-domain
+    ECFContext --> Stage : uses-stage
+    Concept --> ECFContext : has-ecf-context
+    Concept --> ConceptArea : belongs-to
+    ConceptProfile --> Concept : includes
+    ConceptProfile --> ConceptRelationship : includes
+    Concept --> ConceptRelationship : participates-in
+    Concept --> ConceptClassification : has
+    Concept --> Provenance : has-provenance
+}
+package "DEA Foundational Metamodel" {
+    class EntitySpec
+    class Relationship
+}
+Concept --> EntitySpec : maps-to
+ConceptRelationship --> Relationship : candidate-for
+@enduml
