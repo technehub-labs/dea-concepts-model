@@ -1,0 +1,30 @@
+# Concept Areas — CR-CM-001 §10
+#
+# The nine initial Concept Areas: thematic organization for the Concepts
+# Model. These are organizational structures — they must NOT be
+# interpreted as ECF Domains (CR-CM-000; GOVERNANCE.md Rules 4–5).
+# A concept may belong to multiple Concept Areas.
+#
+# This file is derived from the canonical terminology registry
+# (governance/terminology-registry.yaml → initial_concept_areas);
+# the registry is the authority.
+
+conceptAreas:
+  - id: enterprise
+    name: Enterprise
+  - id: operations
+    name: Operations
+  - id: intelligence
+    name: Intelligence
+  - id: execution
+    name: Execution
+  - id: control
+    name: Control
+  - id: scenario
+    name: Scenario
+  - id: value
+    name: Value
+  - id: measurement
+    name: Measurement
+  - id: systems
+    name: Systems

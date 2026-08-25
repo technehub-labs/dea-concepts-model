@@ -1,0 +1,122 @@
+# Relationship Vocabulary — CR-CM-001 §12 / §16
+#
+# The controlled relationship vocabulary of the OpenDEA Concepts Model.
+# Concept relationships use ONLY the verbs below; new verbs require
+# governance approval (GOVERNANCE.md Rule 3). The vocabulary is
+# controlled terminology — arbitrary synonyms must not proliferate.
+#
+# The load-bearing distinctions (CR-CM-001 §13):
+#   uses            ≠ specializes   (AI Agent uses AI Model — not a kind of)
+#   contributes-to  ≠ specializes   (KCI contributes-to KEI — not a kind of)
+#   maps-to         ≠ inheritance   (promotion is an explicit semantic
+#                                    decision, never implied specialization)
+
+vocabulary:
+  id: dea:concepts-relationship-vocabulary
+  version: 1.0.0
+  status: canonical
+  established_by: CR-CM-001
+
+categories:
+
+  structural:
+    description: Concept-structure relations (taxonomy of meaning).
+    verbs:
+      - id: specializes
+        meaning: The source is a narrower concept than the target.
+      - id: generalizes
+        meaning: The source is a broader concept than the target.
+      - id: distinguishes-from
+        meaning: The source draws an explicit semantic boundary with the target.
+
+  semantic:
+    description: Meaning-level relations.
+    verbs:
+      - id: relates-to
+        meaning: A declared semantic association without stronger commitment.
+      - id: depends-on
+        meaning: The source's meaning or operation presupposes the target.
+      - id: complements
+        meaning: Source and target complete each other semantically.
+
+  operational:
+    description: Execution and control relations.
+    verbs:
+      - id: uses
+        meaning: The source employs the target in its operation.
+      - id: executes
+        meaning: The source carries out the target.
+      - id: orchestrates
+        meaning: The source coordinates the target(s) toward an outcome.
+      - id: controls
+        meaning: The source constrains or directs the target's behaviour.
+      - id: governs
+        meaning: The source sets policy/authority over the target.
+      - id: enables
+        meaning: The source makes the target possible or effective.
+      - id: realizes
+        meaning: The source brings the target into operational existence.
+
+  value:
+    description: Value-contribution relations (foundation for the
+      HVS/VOF model of subsequent CRs).
+    verbs:
+      - id: supports
+        meaning: The source upholds the target's value or operation.
+      - id: contributes-to
+        meaning: The source adds measurably to the target's value.
+      - id: creates
+        meaning: The source brings the target's value into being.
+      - id: realizes-value
+        meaning: The source converts potential value into realized value.
+      - id: measures
+        meaning: The source quantifies the target.
+      - id: justifies
+        meaning: The source provides the value rationale for the target.
+
+  contextual:
+    description: Placement and reference relations.
+    verbs:
+      - id: belongs-to
+        meaning: The source is a member of the target grouping (e.g. Concept Area).
+      - id: has-context
+        meaning: The source operates within the target context.
+      - id: has-ecf-context
+        meaning: The source is positioned in the ECF's Domain × Stage
+          coordinate system by the target ECF Context.
+      - id: includes
+        meaning: The source composes the target (e.g. a Concept Profile
+          includes a Concept or Relationship).
+      - id: references
+        meaning: The source points at the target without composing it.
+
+  formalization:
+    description: Relations governing promotion toward the foundational
+      metamodel. maps-to is an association, NEVER inheritance
+      (CR-CM-001 §4, GOVERNANCE.md Rule 7).
+    verbs:
+      - id: maps-to
+        meaning: The source concept corresponds to a metamodel construct by
+          an explicit semantic decision; implies no inheritance.
+      - id: candidate-for
+        meaning: The source is proposed for formalization as the target
+          metamodel construct.
+      - id: formalized-as
+        meaning: The source has been accepted into the foundational
+          metamodel as the target construct (via a metamodel CR).
+
+# External standards mapping relations (CR-CM-001 §16). These govern
+# records under mappings/external/ — they are NOT concept-relationship
+# verbs. External concepts are mapped, never copied; a concept derived
+# from TM Forum must not read as an original OpenDEA definition (§15).
+external_mapping_relations:
+  - id: equivalent-to
+    meaning: The OpenDEA concept and the external concept denote the same
+      semantics.
+  - id: aligned-with
+    meaning: Compatible semantics with declared, non-identical scope.
+  - id: derived-from
+    meaning: The OpenDEA concept is derived from the external concept;
+      provenance must record the source.
+  - id: related-to
+    meaning: A declared association weaker than alignment.

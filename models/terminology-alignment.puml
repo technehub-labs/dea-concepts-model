@@ -1,0 +1,42 @@
+@startuml Terminology_Alignment
+title Terminology Alignment — ECF vs Concepts Model (CR-CM-000 / CR-CM-000A)
+skinparam backgroundColor white
+skinparam packageStyle rectangle
+skinparam shadowing false
+
+package "DEA MetaFramework" {
+    class "ECF Domain" as Domain
+    class "ECF Stage" as Stage
+    note right of Domain
+        Domain and Stage are RESERVED
+        for the Enterprise Concept
+        Framework (CR-CM-000).
+        7 Domains × 7 Stages.
+    end note
+}
+
+package "OpenDEA Concepts Model" {
+    class Concept
+    class "Concept Area" as ConceptArea
+    class "Concept Profile" as ConceptProfile
+    class "Concept Classification" as ConceptClassification
+    class "ECF Context" as ECFContext
+    note right of ConceptArea
+        Thematic grouping.
+        NEVER called Domain.
+    end note
+    note bottom of ConceptProfile
+        A reusable perspective that
+        composes concepts — it does
+        not own them.
+    end note
+}
+
+ECFContext --> Domain : uses-domain (references, never redefines)
+ECFContext --> Stage : uses-stage (references, never redefines)
+Concept --> ECFContext : has-ecf-context (zero or more)
+Concept --> ConceptArea : belongs-to (one or more)
+Concept --> ConceptClassification : has
+ConceptProfile --> Concept : includes
+
+@enduml

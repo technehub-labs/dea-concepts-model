@@ -1,0 +1,167 @@
+# Concept Schema — CR-CM-001 §7 (definition contract)
+#
+# JSON Schema (Draft 2020-12) expressed in YAML. Every concept artifact
+# under concepts/ must validate against this schema.
+#
+# Notes:
+# * id follows CM-<AREA>-<NNN> (§6) and is stable across semantic
+#   revisions (GOVERNANCE.md Rule 8) — identity, not classification.
+# * status carries the §9 lifecycle state.
+# * maturity carries semantic maturity. The controlled maturity
+#   vocabulary is intentionally NOT ratified in this foundation CR;
+#   §8 exemplifies "emerging". The enum is deferred to a content CR so
+#   the vocabulary is ratified alongside the concepts that exercise it
+#   (semantic discipline first, automation second — §20).
+# * ecfContexts domain/stage membership is validated by
+#   tools/validate.py against mappings/ecf/ecf-coordinates.yaml — the
+#   schema checks shape; the validator checks the referenced vocabulary
+#   (the Concepts Model references the ECF vocabulary, never owns it).
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "https://github.com/technehub-labs/dea-concepts-model/schemas/concept.schema.yaml"
+title: OpenDEA Concept
+type: object
+additionalProperties: false
+
+required:
+  - id
+  - name
+  - definition
+  - status
+  - conceptAreas
+  - provenance
+  - version
+  - maturity
+
+properties:
+  id:
+    type: string
+    pattern: '^CM-[A-Z]{2,6}-[0-9]{3}$'
+    description: Stable concept identity (§6). Survives renames,
+      definition refinements, and Concept Area moves.
+  name:
+    type: string
+    minLength: 1
+    description: Canonical display name.
+  definition:
+    type: string
+    minLength: 1
+    description: Normative semantic definition.
+  scope:
+    type: string
+    description: Optional scoping statement (§5).
+  status:
+    type: string
+    enum:
+      - proposed
+      - experimental
+      - established
+      - canonical
+      - metamodel-candidate
+      - formalized
+      - retired
+    description: Lifecycle state (§9; governance/concept-lifecycle.md).
+  maturity:
+    type: string
+    minLength: 1
+    description: Semantic maturity (e.g. emerging). Controlled vocabulary
+      deferred to a content CR — see header note.
+  conceptAreas:
+    type: array
+    minItems: 1
+    items:
+      type: string
+      enum:
+        - Enterprise
+        - Operations
+        - Intelligence
+        - Execution
+        - Control
+        - Scenario
+        - Value
+        - Measurement
+        - Systems
+    description: One or more Concept Areas (§10) — organizational
+      groupings, never ECF Domains.
+  ecfContexts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [domain, stage]
+      properties:
+        domain:
+          type: string
+          description: ECF Domain reference (ECF namespace — see
+            mappings/ecf/ecf-coordinates.yaml).
+        stage:
+          type: string
+          description: ECF Stage reference (ECF namespace).
+    description: Zero or more ECF Contexts (§11). The only place a
+      property named `domain` is legal in a concept artifact — the ECF
+      namespace is explicit here.
+  profiles:
+    type: array
+    items:
+      type: string
+    description: Concept Profiles this concept participates in (§14).
+      Referenced profiles must exist under profiles/ (validator-checked).
+  relationships:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required: [verb, target]
+      properties:
+        verb:
+          type: string
+          description: A controlled verb from
+            governance/relationship-vocabulary.yaml (validator-checked).
+        target:
+          type: string
+          description: Target concept id (CM-<AREA>-<NNN>) — must resolve
+            to an existing concept (validator-checked).
+        note:
+          type: string
+    description: Known semantic relationships (§12, §13).
+  distinguishesFrom:
+    type: array
+    items:
+      type: string
+    description: Important semantic boundaries (§7 distinctions).
+  provenance:
+    type: object
+    additionalProperties: false
+    required: [type, sources]
+    properties:
+      type:
+        type: string
+        enum:
+          - OpenDEA
+          - TM Forum
+          - GSMA
+          - Industry Standard
+          - Academic
+          - Industry Practice
+          - Project Research
+          - Derived
+          - Proposed
+      sources:
+        type: array
+        minItems: 1
+        items:
+          type: string
+      sourceVersion:
+        type: string
+      sourceDate:
+        type: string
+      sourceIdentifier:
+        type: string
+      mappingStatus:
+        type: string
+    description: Origin / evidence (§15). Externally derived concepts
+      must never read as original OpenDEA definitions.
+  version:
+    type: string
+    pattern: '^[0-9]+\.[0-9]+\.[0-9]+$'
+    description: Concept revision (semver).
